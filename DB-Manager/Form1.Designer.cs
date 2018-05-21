@@ -37,14 +37,18 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.dbUrlTxt = new System.Windows.Forms.TextBox();
-            this.userTxt = new System.Windows.Forms.TextBox();
-            this.passTxt = new System.Windows.Forms.TextBox();
+            this.txtDbUrl = new System.Windows.Forms.TextBox();
+            this.txtDbUser = new System.Windows.Forms.TextBox();
+            this.txtDbPass = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.portTxt = new System.Windows.Forms.TextBox();
-            this.dbNameTxt = new System.Windows.Forms.TextBox();
-            this.saveDbBtn = new System.Windows.Forms.Button();
+            this.txtPort = new System.Windows.Forms.TextBox();
+            this.txtDbName = new System.Windows.Forms.TextBox();
+            this.btnSaveConf = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
+            this.txtfilePath = new System.Windows.Forms.TextBox();
+            this.btnSelectFile = new System.Windows.Forms.Button();
+            this.btnUpload = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -127,26 +131,27 @@
             this.label3.TabIndex = 4;
             this.label3.Text = "Password:";
             // 
-            // dbUrlTxt
+            // txtDbUrl
             // 
-            this.dbUrlTxt.Location = new System.Drawing.Point(91, 27);
-            this.dbUrlTxt.Name = "dbUrlTxt";
-            this.dbUrlTxt.Size = new System.Drawing.Size(307, 20);
-            this.dbUrlTxt.TabIndex = 5;
+            this.txtDbUrl.Location = new System.Drawing.Point(91, 27);
+            this.txtDbUrl.Name = "txtDbUrl";
+            this.txtDbUrl.Size = new System.Drawing.Size(307, 20);
+            this.txtDbUrl.TabIndex = 5;
             // 
-            // userTxt
+            // txtDbUser
             // 
-            this.userTxt.Location = new System.Drawing.Point(91, 90);
-            this.userTxt.Name = "userTxt";
-            this.userTxt.Size = new System.Drawing.Size(100, 20);
-            this.userTxt.TabIndex = 6;
+            this.txtDbUser.Location = new System.Drawing.Point(91, 90);
+            this.txtDbUser.Name = "txtDbUser";
+            this.txtDbUser.Size = new System.Drawing.Size(100, 20);
+            this.txtDbUser.TabIndex = 6;
             // 
-            // passTxt
+            // txtDbPass
             // 
-            this.passTxt.Location = new System.Drawing.Point(281, 90);
-            this.passTxt.Name = "passTxt";
-            this.passTxt.Size = new System.Drawing.Size(117, 20);
-            this.passTxt.TabIndex = 7;
+            this.txtDbPass.Location = new System.Drawing.Point(281, 90);
+            this.txtDbPass.Name = "txtDbPass";
+            this.txtDbPass.PasswordChar = '*';
+            this.txtDbPass.Size = new System.Drawing.Size(117, 20);
+            this.txtDbPass.TabIndex = 7;
             // 
             // label4
             // 
@@ -166,31 +171,71 @@
             this.label5.TabIndex = 9;
             this.label5.Text = "DB name:";
             // 
-            // portTxt
+            // txtPort
             // 
-            this.portTxt.Location = new System.Drawing.Point(91, 57);
-            this.portTxt.Name = "portTxt";
-            this.portTxt.Size = new System.Drawing.Size(100, 20);
-            this.portTxt.TabIndex = 10;
+            this.txtPort.Location = new System.Drawing.Point(91, 57);
+            this.txtPort.Name = "txtPort";
+            this.txtPort.Size = new System.Drawing.Size(100, 20);
+            this.txtPort.TabIndex = 10;
             // 
-            // dbNameTxt
+            // txtDbName
             // 
-            this.dbNameTxt.Location = new System.Drawing.Point(280, 60);
-            this.dbNameTxt.Name = "dbNameTxt";
-            this.dbNameTxt.Size = new System.Drawing.Size(118, 20);
-            this.dbNameTxt.TabIndex = 11;
+            this.txtDbName.Location = new System.Drawing.Point(280, 60);
+            this.txtDbName.Name = "txtDbName";
+            this.txtDbName.Size = new System.Drawing.Size(118, 20);
+            this.txtDbName.TabIndex = 11;
             // 
-            // saveDbBtn
+            // btnSaveConf
             // 
-            this.saveDbBtn.BackColor = System.Drawing.SystemColors.ScrollBar;
-            this.saveDbBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.saveDbBtn.Location = new System.Drawing.Point(431, 38);
-            this.saveDbBtn.Name = "saveDbBtn";
-            this.saveDbBtn.Size = new System.Drawing.Size(107, 60);
-            this.saveDbBtn.TabIndex = 12;
-            this.saveDbBtn.Text = "Save DataBase information";
-            this.saveDbBtn.UseVisualStyleBackColor = false;
-            this.saveDbBtn.Click += new System.EventHandler(this.saveDbBtn_Click);
+            this.btnSaveConf.BackColor = System.Drawing.SystemColors.ScrollBar;
+            this.btnSaveConf.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSaveConf.Location = new System.Drawing.Point(432, 38);
+            this.btnSaveConf.Name = "btnSaveConf";
+            this.btnSaveConf.Size = new System.Drawing.Size(107, 60);
+            this.btnSaveConf.TabIndex = 12;
+            this.btnSaveConf.Text = "Save/Update DataBase information";
+            this.btnSaveConf.UseVisualStyleBackColor = false;
+            this.btnSaveConf.Click += new System.EventHandler(this.saveDbBtn_Click);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(27, 151);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(50, 13);
+            this.label6.TabIndex = 13;
+            this.label6.Text = "File path:";
+            // 
+            // txtfilePath
+            // 
+            this.txtfilePath.Location = new System.Drawing.Point(91, 151);
+            this.txtfilePath.Name = "txtfilePath";
+            this.txtfilePath.ReadOnly = true;
+            this.txtfilePath.Size = new System.Drawing.Size(307, 20);
+            this.txtfilePath.TabIndex = 14;
+            // 
+            // btnSelectFile
+            // 
+            this.btnSelectFile.BackColor = System.Drawing.SystemColors.ScrollBar;
+            this.btnSelectFile.Location = new System.Drawing.Point(432, 151);
+            this.btnSelectFile.Name = "btnSelectFile";
+            this.btnSelectFile.Size = new System.Drawing.Size(75, 23);
+            this.btnSelectFile.TabIndex = 15;
+            this.btnSelectFile.Text = "Select file";
+            this.btnSelectFile.UseVisualStyleBackColor = false;
+            this.btnSelectFile.Click += new System.EventHandler(this.btnSelectFile_Click);
+            // 
+            // btnUpload
+            // 
+            this.btnUpload.BackColor = System.Drawing.SystemColors.ScrollBar;
+            this.btnUpload.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnUpload.Location = new System.Drawing.Point(195, 211);
+            this.btnUpload.Name = "btnUpload";
+            this.btnUpload.Size = new System.Drawing.Size(167, 58);
+            this.btnUpload.TabIndex = 16;
+            this.btnUpload.Text = "Upload Data!";
+            this.btnUpload.UseVisualStyleBackColor = false;
+            this.btnUpload.Click += new System.EventHandler(this.btnUpload_Click);
             // 
             // Form1
             // 
@@ -198,20 +243,25 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.ClientSize = new System.Drawing.Size(567, 319);
-            this.Controls.Add(this.saveDbBtn);
-            this.Controls.Add(this.dbNameTxt);
-            this.Controls.Add(this.portTxt);
+            this.Controls.Add(this.btnUpload);
+            this.Controls.Add(this.btnSelectFile);
+            this.Controls.Add(this.txtfilePath);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.btnSaveConf);
+            this.Controls.Add(this.txtDbName);
+            this.Controls.Add(this.txtPort);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.passTxt);
-            this.Controls.Add(this.userTxt);
-            this.Controls.Add(this.dbUrlTxt);
+            this.Controls.Add(this.txtDbPass);
+            this.Controls.Add(this.txtDbUser);
+            this.Controls.Add(this.txtDbUrl);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "DataBase Manager";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
@@ -231,14 +281,18 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox dbUrlTxt;
-        private System.Windows.Forms.TextBox userTxt;
-        private System.Windows.Forms.TextBox passTxt;
+        private System.Windows.Forms.TextBox txtDbUrl;
+        private System.Windows.Forms.TextBox txtDbUser;
+        private System.Windows.Forms.TextBox txtDbPass;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox portTxt;
-        private System.Windows.Forms.TextBox dbNameTxt;
-        private System.Windows.Forms.Button saveDbBtn;
+        private System.Windows.Forms.TextBox txtPort;
+        private System.Windows.Forms.TextBox txtDbName;
+        private System.Windows.Forms.Button btnSaveConf;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox txtfilePath;
+        private System.Windows.Forms.Button btnSelectFile;
+        private System.Windows.Forms.Button btnUpload;
     }
 }
 
