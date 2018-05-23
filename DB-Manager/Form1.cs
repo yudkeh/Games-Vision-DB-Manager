@@ -62,6 +62,7 @@ namespace DB_Manager
         private void Form1_Load(object sender, EventArgs e)
         {
             file = new String[5];
+            LoadSettings();
         }
 
         private void saveDbBtn_Click(object sender, EventArgs e)
@@ -80,7 +81,7 @@ namespace DB_Manager
                 catch (IOException ex)
                 {
                     MessageBox.Show("Can't save config file.");
-                    Console.Write(ex.ToString());
+                    Console.Write("Can't save config file : "+ex.ToString());
                 }
             }
             else
@@ -168,6 +169,31 @@ namespace DB_Manager
             d.uid = txtDbUser.Text;
             d.database = txtDbName.Text;
             d.SetConnectionString();
+        }
+
+        //loading app settings from configration file
+        private void LoadSettings()
+        {
+            try
+            {
+                file = System.IO.File.ReadAllLines(@"data\settings.config");
+                txtDbUrl.Text = file[0];
+                txtPort.Text = file[1];
+                txtDbName.Text = file[2];
+                txtDbUser.Text = file[3];
+                txtDbPass.Text = file[4];
+
+                txtDbUrl.Text = txtDbUrl.Text.Replace("dbUrl=", "");
+                txtPort.Text = txtPort.Text.Replace("dbPort=", "");
+                txtDbName.Text = txtDbName.Text.Replace("dbName=", "");
+                txtDbUser.Text = txtDbUser.Text.Replace("dbUsername=", "");
+                txtDbPass.Text = txtDbPass.Text.Replace("dbPass=", "");
+
+            }
+            catch (IOException ex)
+            {
+                Console.Write("Can't load config file : "+ ex.ToString());
+            }
         }
     }
 }
