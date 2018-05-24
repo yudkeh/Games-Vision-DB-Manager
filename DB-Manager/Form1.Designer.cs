@@ -71,14 +71,14 @@
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(37, 20);
             this.toolStripMenuItem1.Text = "File";
-            this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
+            this.toolStripMenuItem1.Click += new System.EventHandler(this.ToolStripMenuItem1_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.exitToolStripMenuItem.Text = "Exit";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -94,14 +94,14 @@
             this.howToUseToolStripMenuItem.Name = "howToUseToolStripMenuItem";
             this.howToUseToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.howToUseToolStripMenuItem.Text = "How to use?";
-            this.howToUseToolStripMenuItem.Click += new System.EventHandler(this.howToUseToolStripMenuItem_Click);
+            this.howToUseToolStripMenuItem.Click += new System.EventHandler(this.HowToUseToolStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.aboutToolStripMenuItem.Text = "About";
-            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItem_Click);
             // 
             // label1
             // 
@@ -111,7 +111,7 @@
             this.label1.Size = new System.Drawing.Size(50, 13);
             this.label1.TabIndex = 2;
             this.label1.Text = "DB URL:";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
+            this.label1.Click += new System.EventHandler(this.Label1_Click);
             // 
             // label2
             // 
@@ -195,7 +195,7 @@
             this.btnSaveConf.TabIndex = 12;
             this.btnSaveConf.Text = "Save/Update DataBase information";
             this.btnSaveConf.UseVisualStyleBackColor = false;
-            this.btnSaveConf.Click += new System.EventHandler(this.saveDbBtn_Click);
+            this.btnSaveConf.Click += new System.EventHandler(this.SaveDbBtn_Click);
             // 
             // label6
             // 
@@ -223,7 +223,7 @@
             this.btnSelectFile.TabIndex = 15;
             this.btnSelectFile.Text = "Select file";
             this.btnSelectFile.UseVisualStyleBackColor = false;
-            this.btnSelectFile.Click += new System.EventHandler(this.btnSelectFile_Click);
+            this.btnSelectFile.Click += new System.EventHandler(this.BtnSelectFile_Click);
             // 
             // btnUpload
             // 
@@ -235,7 +235,7 @@
             this.btnUpload.TabIndex = 16;
             this.btnUpload.Text = "Upload Data!";
             this.btnUpload.UseVisualStyleBackColor = false;
-            this.btnUpload.Click += new System.EventHandler(this.btnUpload_Click);
+            this.btnUpload.Click += new System.EventHandler(this.BtnUpload_Click);
             // 
             // Form1
             // 

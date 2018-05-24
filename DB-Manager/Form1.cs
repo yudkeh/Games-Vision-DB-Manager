@@ -24,37 +24,37 @@ namespace DB_Manager
             InitializeComponent();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void Button1_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        private void ToolStripMenuItem1_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
 
-        private void howToUseToolStripMenuItem_Click(object sender, EventArgs e)
+        private void HowToUseToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            MessageBox.Show("Currently the application only support MySQL as the DB.\nIn order to push the data to the DB, please enter the DB inforamtion and select the excel file, afterwards, just click on the 'Upload Data!' button.", "How to use?");
         }
 
-        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MessageBox.Show("This App created by: Yehuda Hadad\nfor more information and sources, please contact:\nyuda098q@gmail.com\nor visit my GitHub page:\nhttps://github.com/yudkeh", "About");
         }
 
-        private void label1_Click(object sender, EventArgs e)
+        private void Label1_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void serverSettingsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ServerSettingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
         }
@@ -65,7 +65,7 @@ namespace DB_Manager
             LoadSettings();
         }
 
-        private void saveDbBtn_Click(object sender, EventArgs e)
+        private void SaveDbBtn_Click(object sender, EventArgs e)
         {
             if (ValidateForm())
             {
@@ -83,6 +83,10 @@ namespace DB_Manager
                     MessageBox.Show("Can't save config file.");
                     Console.Write("Can't save config file : "+ex.ToString());
                 }
+                catch (Exception ex1)
+                {
+                    Console.Write("Exception occured : " + e.ToString());
+                }
             }
             else
             {
@@ -91,7 +95,7 @@ namespace DB_Manager
 
         }
 
-        private void btnSelectFile_Click(object sender, EventArgs e)
+        private void BtnSelectFile_Click(object sender, EventArgs e)
         {
             _fDialog = new OpenFileDialog();
             _fDialog.Title = "Choose File";
@@ -112,7 +116,7 @@ namespace DB_Manager
             Console.WriteLine(result);  //For debugging use.
         }
 
-        private void btnUpload_Click(object sender, EventArgs e)
+        private void BtnUpload_Click(object sender, EventArgs e)
         {
             d = new dal();
 
@@ -193,6 +197,10 @@ namespace DB_Manager
             catch (IOException ex)
             {
                 Console.Write("Can't load config file : "+ ex.ToString());
+            }
+            catch(Exception e)
+            {
+                Console.Write("Can't load file info : " + e.ToString());
             }
         }
     }
