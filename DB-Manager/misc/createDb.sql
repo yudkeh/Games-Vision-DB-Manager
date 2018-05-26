@@ -37,10 +37,8 @@ CREATE TABLE IF NOT EXISTS `games` (
   `AR` int(11) NOT NULL DEFAULT '0',
   `DIV` varchar(50) NOT NULL,
   `DATE` date NOT NULL,
-   UNIQUE KEY `HomeTeam` (`HomeTeam`),
-   UNIQUE KEY `AwayTeam` (`AwayTeam`),
    UNIQUE KEY `id` (`id`),
-   UNIQUE KEY `DATE` (`DATE`)
+   UNIQUE KEY `DATE` (`DATE`,`HomeTeam`,`AwayTeam`)
 )
 
 

@@ -114,8 +114,16 @@ namespace DB_Manager.classes
                 }
                 catch (MySqlException ex)
                 {
-                    _log.WriteLog("MySQL command to add team failed with the error : " + ex.ToString());
-                    MessageBox.Show("failed to isnert team to the DB.");
+                    if (ex.Number != 1062)
+                    {
+                        _log.WriteLog("MySQL command to add team failed with the error : " + ex.ToString());
+                        MessageBox.Show("failed to isnert team to the DB.");
+                    }
+                    else
+                    {
+                        //duplicatye team, can ignore
+                    }
+
                 }
                 catch (Exception ex)
                 {
@@ -161,8 +169,15 @@ namespace DB_Manager.classes
                 }
                 catch (MySqlException ex)
                 {
-                    _log.WriteLog("MySQL command to add game failed with the error : " + ex.ToString());
-                    MessageBox.Show("failed to isnert games to the DB.");
+                    if (ex.Number != 1062)
+                    {
+                        _log.WriteLog("MySQL command to add game failed with the error : " + ex.ToString());
+                        MessageBox.Show("failed to isnert games to the DB.");
+                    }
+                    else
+                    {
+                        //duplicate game can ignore..
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -183,8 +198,15 @@ namespace DB_Manager.classes
             }
             catch (MySqlException ex)
             {
-                _log.WriteLog("MySQL command to add division failed with the error : " + ex.ToString());
-                MessageBox.Show("failed to isnert division to the DB.");
+                if (ex.Number != 1062)
+                {
+                    _log.WriteLog("MySQL command to add division failed with the error : " + ex.ToString());
+                    MessageBox.Show("failed to isnert division to the DB.");
+                }
+                else
+                {
+                    //duplciate division can ignore
+                }
             }
             catch (Exception ex)
             {

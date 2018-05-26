@@ -141,6 +141,7 @@ namespace DB_Manager
             pbUpload.Value = 0; //resetting the progres bar value
             _runnig = true;
             _uploadStatus = false;
+            btnUpload.Enabled = false;
 
             //validating the form
             if (ValidateForm())
@@ -287,6 +288,7 @@ namespace DB_Manager
             catch (Exception ex)
             {
                 _log.WriteLog("failure in the thread executer : " + ex.ToString());
+                btnUpload.Enabled = true;
             }
 
         }
@@ -294,9 +296,10 @@ namespace DB_Manager
         void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             _runnig = false;
-            lblPb.Text = "Upload completed";
             pbUpload.Value = 100;
+            lblPb.Text = "Upload completed";
             _d.CloseConnection();
+            btnUpload.Enabled = true;
         }
     }
 }
