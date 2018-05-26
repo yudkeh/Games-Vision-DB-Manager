@@ -13,13 +13,14 @@ namespace DB_Manager.classes
         Logger _log;
         private MySqlConnection _connection;
         private string _connectionString;
-        private Boolean _connectionStatus;
+        public Boolean _connectionStatus;
 
         public string _server {get; set;}
         public string _port {get; set;}
         public string _database {get; set;}
         public string _uid {get; set;}
         public string _password {get; set;}
+        public string _ssl { get; set; }
 
         //constructors:
         //empty constructor
@@ -82,8 +83,12 @@ namespace DB_Manager.classes
 
         public void SetConnectionString()
         {
-            _connectionString = "SERVER=" + _server + ";" + "PORT=" + _port + ";" + "DATABASE=" +
-            _database + ";" + "UID=" + _uid + ";" + "PASSWORD=" + _password + ";";
+            if(_ssl=="Yes")
+                _connectionString = "SERVER=" + _server + ";" + "PORT=" + _port + ";" + "DATABASE=" +
+                _database + ";" + "UID=" + _uid + ";" + "PASSWORD=" + _password + ";"+ "Encrypt = false;";
+            else
+                _connectionString = "SERVER=" + _server + ";" + "PORT=" + _port + ";" + "DATABASE=" +
+                _database + ";" + "UID=" + _uid + ";" + "PASSWORD=" + _password + ";"+ "Encrypt=false;";
         }
 
         public Boolean PushData(HashSet<string> _teams, List<Game> _games, String _division)
@@ -101,7 +106,7 @@ namespace DB_Manager.classes
                 try
                 {
                     cmd = _connection.CreateCommand();
-                    command = string.Format("insert into team (name) VALUES(@name)");
+                    command = string.Format("insert into teams (name) VALUES(@name)");
                     cmd.CommandText = command;
                     cmd.Parameters.AddWithValue("@name", t);
                     cmd.ExecuteNonQuery();
@@ -126,7 +131,7 @@ namespace DB_Manager.classes
                 try
                 {
                     cmd = _connection.CreateCommand();
-                    command = string.Format("insert into game (HomeTeam,AwayTeam,FTHG,FTAG,FTR,HTHG,HTAG,HTR,HS,`AS`,HST,AST,HF,AF,HC,AC,HY,AY,HR,AR,`DIV`,DATE) VALUES(@HomeTeam,@AwayTeam,@FTHG,@FTAG,@FTR,@HTHG,@HTAG,@HTR,@HS,@AS,@HST,@AST,@HF,@AF,@HC,@AC,@HY,@AY,@HR,@AR,@DIV,@DATE)");
+                    command = string.Format("insert into games (HomeTeam,AwayTeam,FTHG,FTAG,FTR,HTHG,HTAG,HTR,HS,`AS`,HST,AST,HF,AF,HC,AC,HY,AY,HR,AR,`DIV`,DATE) VALUES(@HomeTeam,@AwayTeam,@FTHG,@FTAG,@FTR,@HTHG,@HTAG,@HTR,@HS,@AS,@HST,@AST,@HF,@AF,@HC,@AC,@HY,@AY,@HR,@AR,@DIV,@DATE)");
                     cmd.CommandText = command;
                     cmd.Parameters.AddWithValue("@HomeTeam", _games[i].HomeTeam.ToString());
                     cmd.Parameters.AddWithValue("@AwayTeam", _games[i].AwayTeam.ToString());
@@ -170,9 +175,9 @@ namespace DB_Manager.classes
             try
             {
                 cmd = _connection.CreateCommand();
-                command = string.Format("insert into division (name) VALUES(@name)");
+                command = string.Format("insert into divisions (sign) VALUES(@sign)");
                 cmd.CommandText = command;
-                cmd.Parameters.AddWithValue("@name", _division);
+                cmd.Parameters.AddWithValue("@sign", _division);
                 cmd.ExecuteNonQuery();
                 _div_ins++;
             }

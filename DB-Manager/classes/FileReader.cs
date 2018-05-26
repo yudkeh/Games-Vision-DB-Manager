@@ -37,6 +37,9 @@ namespace DB_Manager.classes
             StreamReader reader = new StreamReader(File.OpenRead(_filePath));
             string line = reader.ReadLine(); //skipping te first line of the file which is the file header
 
+            _games = new List<Game>();
+            _teams = new HashSet<string>();
+
             try
             {
                 while (!reader.EndOfStream)

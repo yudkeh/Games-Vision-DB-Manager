@@ -52,6 +52,8 @@
             this.pbUpload = new System.Windows.Forms.ProgressBar();
             this.lblPb = new System.Windows.Forms.Label();
             this.backgroundWorker = new System.ComponentModel.BackgroundWorker();
+            this.label7 = new System.Windows.Forms.Label();
+            this.ddSsl = new System.Windows.Forms.ComboBox();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -260,12 +262,36 @@
             // 
             this.backgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker_DoWork);
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(27, 121);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(33, 13);
+            this.label7.TabIndex = 19;
+            this.label7.Text = "SSL: ";
+            // 
+            // ddSsl
+            // 
+            this.ddSsl.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ddSsl.FormattingEnabled = true;
+            this.ddSsl.Items.AddRange(new object[] {
+            "No",
+            "Yes"});
+            this.ddSsl.Location = new System.Drawing.Point(91, 121);
+            this.ddSsl.Name = "ddSsl";
+            this.ddSsl.Size = new System.Drawing.Size(100, 21);
+            this.ddSsl.Sorted = true;
+            this.ddSsl.TabIndex = 20;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.ClientSize = new System.Drawing.Size(567, 319);
+            this.Controls.Add(this.ddSsl);
+            this.Controls.Add(this.label7);
             this.Controls.Add(this.lblPb);
             this.Controls.Add(this.pbUpload);
             this.Controls.Add(this.btnUpload);
@@ -321,6 +347,8 @@
         private System.Windows.Forms.ProgressBar pbUpload;
         private System.Windows.Forms.Label lblPb;
         private System.ComponentModel.BackgroundWorker backgroundWorker;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.ComboBox ddSsl;
     }
 }
 

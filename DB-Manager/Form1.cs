@@ -83,6 +83,7 @@ namespace DB_Manager
         {
             if (ValidateForm())
             {
+                _file = new string[6];
                 try
                 {
                     _file[0] = "dbUrl=" + txtDbUrl.Text;
@@ -90,6 +91,7 @@ namespace DB_Manager
                     _file[2] = "dbName=" + txtDbName.Text;
                     _file[3] = "dbUsername=" + txtDbUser.Text;
                     _file[4] = "dbPass=" + txtDbPass.Text;
+                    _file[5] = "dbSsl=" + ddSsl.SelectedItem.ToString();
                     System.IO.File.WriteAllLines(@"data\settings.config", _file);
                 }
                 catch (IOException ex)
@@ -165,17 +167,9 @@ namespace DB_Manager
                             pbUpload.Value = 50;
                             lblPb.Text = "Uplaoding the data";
 
+                            backgroundWorker.WorkerReportsProgress = true;
+                            backgroundWorker.RunWorkerCompleted += backgroundWorker_RunWorkerCompleted;
                             backgroundWorker.RunWorkerAsync();
-
-                            if (_uploadStatus)
-                            {
-                                pbUpload.Value = 100;
-                                lblPb.Text = "Data have been uploaded";
-                            }
-                            else
-                            {
-                               //in case of failure, the error will be printed using the Dal variable
-                            }
 
                         }
                         else
@@ -212,7 +206,6 @@ namespace DB_Manager
                 pbUpload.Visible = false;
                 MessageBox.Show("Please make sure that the values have been inserted as need.", "Error");
             }
-            _runnig = false;
         }
 
         //validating the form texts
@@ -230,8 +223,10 @@ namespace DB_Manager
                 validated = false;
             else if (txtPort.Text.Trim() == String.Empty)
                 validated = false;
+            else if(ddSsl.SelectedItem == null)
+                validated = false;
 
-            if(validated)
+            if (validated)
             {
                 validated = int.TryParse(txtPort.Text, out myInt);
             }
@@ -247,6 +242,7 @@ namespace DB_Manager
             _d._password = txtDbPass.Text;
             _d._uid = txtDbUser.Text;
             _d._database = txtDbName.Text;
+            _d._ssl = ddSsl.SelectedItem.ToString();
             _d.SetConnectionString();
         }
 
@@ -262,6 +258,7 @@ namespace DB_Manager
                 txtDbUser.Text = _file[3];
                 txtDbPass.Text = _file[4];
 
+                ddSsl.SelectedItem = _file[5].Replace("dbSsl=", "");
                 txtDbUrl.Text = txtDbUrl.Text.Replace("dbUrl=", "");
                 txtPort.Text = txtPort.Text.Replace("dbPort=", "");
                 txtDbName.Text = txtDbName.Text.Replace("dbName=", "");
@@ -292,6 +289,14 @@ namespace DB_Manager
                 _log.WriteLog("failure in the thread executer : " + ex.ToString());
             }
 
+        }
+
+        void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            _runnig = false;
+            lblPb.Text = "Upload completed";
+            pbUpload.Value = 100;
+            _d.CloseConnection();
         }
     }
 }
