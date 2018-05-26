@@ -20,12 +20,14 @@ namespace DB_Manager
         private String[] _file;
         private FileReader _fd;
         Logger _log = new Logger();
+        private Boolean runnig;
 
         public Form1()
         {
             InitializeComponent();
             lblPb.Visible = false;
             pbUpload.Visible = false;
+            runnig = false;
         }
 
         private void Button1_Click(object sender, EventArgs e)
@@ -40,7 +42,14 @@ namespace DB_Manager
 
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            if (!runnig)
+            {
+                Application.Exit();
+            }
+            else
+            {
+                MessageBox.Show("Cannot close the application while it reading the file and insert it values to the dtabase.", "Error");
+            }
         }
 
         private void HowToUseToolStripMenuItem_Click(object sender, EventArgs e)
@@ -124,6 +133,7 @@ namespace DB_Manager
         {
             _d = new Dal();
             pbUpload.Value = 0; //resetting the progres bar value
+            runnig = true;
 
             //validating the form
             if (ValidateForm())
@@ -157,12 +167,14 @@ namespace DB_Manager
                         }
                         else
                         {
+                            runnig = false;
                             MessageBox.Show("Cannot read the file.", "Error");
                         }
 
                     }
                     else
                     {
+                        runnig = false;
                         lblPb.Visible = false;
                         pbUpload.Visible = false;
                         //MessageBox.Show("Could not conenct to the database.", "Error");
@@ -172,14 +184,16 @@ namespace DB_Manager
                 }
                 else
                 {
+                    runnig = false;
                     MessageBox.Show("Please select file.", "Error");
-
                 }
             }
             else
             {
+                runnig = false;
                 MessageBox.Show("Please make sure that the values have been inserted as need.", "Error");
             }
+            runnig = false;
         }
 
         //validating the form texts
