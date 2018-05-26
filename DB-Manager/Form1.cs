@@ -166,7 +166,7 @@ namespace DB_Manager
                         if (_fd.ReadData())
                         {
                             pbUpload.Value = 50;
-                            lblPb.Text = "Uplaoding the data";
+                            lblPb.Text = "Uplaoding the data, please wait..";
 
                             backgroundWorker.WorkerReportsProgress = true;
                             backgroundWorker.RunWorkerCompleted += backgroundWorker_RunWorkerCompleted;
@@ -289,6 +289,7 @@ namespace DB_Manager
             {
                 _log.WriteLog("failure in the thread executer : " + ex.ToString());
                 btnUpload.Enabled = true;
+                _runnig = false;
             }
 
         }
@@ -300,6 +301,11 @@ namespace DB_Manager
             lblPb.Text = "Upload completed";
             _d.CloseConnection();
             btnUpload.Enabled = true;
+        }
+
+        private void label7_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
