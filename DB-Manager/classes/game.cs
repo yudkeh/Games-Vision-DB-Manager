@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DB_Manager.classes
 {
-    class game
+    class Game
     {
         public String HomeTeam { get; set; }
         public String AwayTeam { get; set; }
@@ -32,7 +32,7 @@ namespace DB_Manager.classes
         public DateTime DATE { get; set; }
 
         //empty constructor
-        public game()
+        public Game()
         {
 
         }

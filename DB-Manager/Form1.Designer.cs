@@ -49,6 +49,8 @@
             this.txtfilePath = new System.Windows.Forms.TextBox();
             this.btnSelectFile = new System.Windows.Forms.Button();
             this.btnUpload = new System.Windows.Forms.Button();
+            this.pbUpload = new System.Windows.Forms.ProgressBar();
+            this.lblPb = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -76,7 +78,7 @@
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
             // 
@@ -92,14 +94,14 @@
             // howToUseToolStripMenuItem
             // 
             this.howToUseToolStripMenuItem.Name = "howToUseToolStripMenuItem";
-            this.howToUseToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.howToUseToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
             this.howToUseToolStripMenuItem.Text = "How to use?";
             this.howToUseToolStripMenuItem.Click += new System.EventHandler(this.HowToUseToolStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.AboutToolStripMenuItem_Click);
             // 
@@ -229,7 +231,7 @@
             // 
             this.btnUpload.BackColor = System.Drawing.SystemColors.ScrollBar;
             this.btnUpload.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnUpload.Location = new System.Drawing.Point(195, 211);
+            this.btnUpload.Location = new System.Drawing.Point(195, 231);
             this.btnUpload.Name = "btnUpload";
             this.btnUpload.Size = new System.Drawing.Size(167, 58);
             this.btnUpload.TabIndex = 16;
@@ -237,12 +239,30 @@
             this.btnUpload.UseVisualStyleBackColor = false;
             this.btnUpload.Click += new System.EventHandler(this.BtnUpload_Click);
             // 
+            // pbUpload
+            // 
+            this.pbUpload.Location = new System.Drawing.Point(195, 178);
+            this.pbUpload.Name = "pbUpload";
+            this.pbUpload.Size = new System.Drawing.Size(167, 23);
+            this.pbUpload.TabIndex = 17;
+            // 
+            // lblPb
+            // 
+            this.lblPb.AutoSize = true;
+            this.lblPb.Location = new System.Drawing.Point(219, 204);
+            this.lblPb.Name = "lblPb";
+            this.lblPb.Size = new System.Drawing.Size(106, 13);
+            this.lblPb.TabIndex = 18;
+            this.lblPb.Text = "Uploading the data...";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.ClientSize = new System.Drawing.Size(567, 319);
+            this.Controls.Add(this.lblPb);
+            this.Controls.Add(this.pbUpload);
             this.Controls.Add(this.btnUpload);
             this.Controls.Add(this.btnSelectFile);
             this.Controls.Add(this.txtfilePath);
@@ -293,6 +313,8 @@
         private System.Windows.Forms.TextBox txtfilePath;
         private System.Windows.Forms.Button btnSelectFile;
         private System.Windows.Forms.Button btnUpload;
+        private System.Windows.Forms.ProgressBar pbUpload;
+        private System.Windows.Forms.Label lblPb;
     }
 }
 

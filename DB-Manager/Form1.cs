@@ -16,12 +16,16 @@ namespace DB_Manager
     {
         private OpenFileDialog _fDialog;
         private String _filePath;
-        private dal d;
-        private String[] file;
+        private Dal _d;
+        private String[] _file;
+        private FileReader _fd;
+        Logger _log = new Logger();
 
         public Form1()
         {
             InitializeComponent();
+            lblPb.Visible = false;
+            pbUpload.Visible = false;
         }
 
         private void Button1_Click(object sender, EventArgs e)
@@ -41,7 +45,7 @@ namespace DB_Manager
 
         private void HowToUseToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Currently the application only support MySQL as the DB.\nIn order to push the data to the DB, please enter the DB inforamtion and select the excel file, afterwards, just click on the 'Upload Data!' button.", "How to use?");
+            MessageBox.Show("Currently the application only support MySQL as the DB.\nIn order to push the data to the DB, please enter the DB inforamtion and select the excel file, afterwards, just click on the 'Upload Data!' button.\nIf any error occur, please check the log file for more info.", "How to use?");
         }
 
         private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -61,7 +65,7 @@ namespace DB_Manager
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            file = new String[5];
+            _file = new String[5];
             LoadSettings();
         }
 
@@ -71,28 +75,28 @@ namespace DB_Manager
             {
                 try
                 {
-                    file[0] = "dbUrl=" + txtDbUrl.Text;
-                    file[1] = "dbPort=" + txtPort.Text;
-                    file[2] = "dbName=" + txtDbName.Text;
-                    file[3] = "dbUsername=" + txtDbUser.Text;
-                    file[4] = "dbPass=" + txtDbPass.Text;
-                    System.IO.File.WriteAllLines(@"data\settings.config", file);
+                    _file[0] = "dbUrl=" + txtDbUrl.Text;
+                    _file[1] = "dbPort=" + txtPort.Text;
+                    _file[2] = "dbName=" + txtDbName.Text;
+                    _file[3] = "dbUsername=" + txtDbUser.Text;
+                    _file[4] = "dbPass=" + txtDbPass.Text;
+                    System.IO.File.WriteAllLines(@"data\settings.config", _file);
                 }
                 catch (IOException ex)
                 {
                     MessageBox.Show("Can't save config file.");
-                    Console.Write("Can't save config file : "+ex.ToString());
+                    _log.WriteLog("failed to save configuration : "+ex.ToString());
                 }
-                catch (Exception ex1)
+                catch (Exception ex)
                 {
-                    Console.Write("Exception occured : " + e.ToString());
+                    MessageBox.Show("Can't save config file.");
+                    _log.WriteLog("failed to save configuration : " + ex.ToString());
                 }
             }
             else
             {
                 MessageBox.Show("Please make sure that the values have been inserted as need.", "Error");
             }
-
         }
 
         private void BtnSelectFile_Click(object sender, EventArgs e)
@@ -118,14 +122,52 @@ namespace DB_Manager
 
         private void BtnUpload_Click(object sender, EventArgs e)
         {
-            d = new dal();
+            _d = new Dal();
+            pbUpload.Value = 0; //resetting the progres bar value
 
+            //validating the form
             if (ValidateForm())
             {
                 FillDal();
 
+                //validating that we have select file
                 if(txtfilePath.Text.Trim() != String.Empty)
                 {
+                    lblPb.Visible = true;
+                    pbUpload.Visible = true;
+                    lblPb.Text = "Connecting to the DB";
+
+                    //trying to connect to the DB
+                    if (_d.OpenConnection())
+                    {
+                        pbUpload.Value = 15;
+                        _fd = new FileReader(txtfilePath.Text);
+                        lblPb.Text = "Reading the file";
+
+                        //trying to read the file.
+                        if (_fd.ReadData())
+                        {
+                            pbUpload.Value = 50;
+
+
+                            lblPb.Text = "Uplaoding the data";
+                            pbUpload.Value = 100;
+
+                            lblPb.Text = "Data have been uploaded";
+                        }
+                        else
+                        {
+                            MessageBox.Show("Cannot read the file.", "Error");
+                        }
+
+                    }
+                    else
+                    {
+                        lblPb.Visible = false;
+                        pbUpload.Visible = false;
+                        //MessageBox.Show("Could not conenct to the database.", "Error");
+                        //not priniting error since it can come from few reason, therefore the error will be printed in the Dal class.
+                    }
 
                 }
                 else
@@ -167,12 +209,12 @@ namespace DB_Manager
         //inserting values from the form to the dal object and generating the connection string
         private void FillDal()
         {
-            d.server = txtDbUrl.Text;
-            d.port = txtPort.Text;
-            d.password = txtDbPass.Text;
-            d.uid = txtDbUser.Text;
-            d.database = txtDbName.Text;
-            d.SetConnectionString();
+            _d.server = txtDbUrl.Text;
+            _d.port = txtPort.Text;
+            _d.password = txtDbPass.Text;
+            _d.uid = txtDbUser.Text;
+            _d.database = txtDbName.Text;
+            _d.SetConnectionString();
         }
 
         //loading app settings from configration file
@@ -180,12 +222,12 @@ namespace DB_Manager
         {
             try
             {
-                file = System.IO.File.ReadAllLines(@"data\settings.config");
-                txtDbUrl.Text = file[0];
-                txtPort.Text = file[1];
-                txtDbName.Text = file[2];
-                txtDbUser.Text = file[3];
-                txtDbPass.Text = file[4];
+                _file = System.IO.File.ReadAllLines(@"data\settings.config");
+                txtDbUrl.Text = _file[0];
+                txtPort.Text = _file[1];
+                txtDbName.Text = _file[2];
+                txtDbUser.Text = _file[3];
+                txtDbPass.Text = _file[4];
 
                 txtDbUrl.Text = txtDbUrl.Text.Replace("dbUrl=", "");
                 txtPort.Text = txtPort.Text.Replace("dbPort=", "");
@@ -196,11 +238,13 @@ namespace DB_Manager
             }
             catch (IOException ex)
             {
-                Console.Write("Can't load config file : "+ ex.ToString());
+                    MessageBox.Show("Can't load configuration file.");
+                    _log.WriteLog("failed to load configration file : " + ex.ToString());
             }
-            catch(Exception e)
+            catch(Exception ex)
             {
-                Console.Write("Can't load file info : " + e.ToString());
+                    //MessageBox.Show("Can't load configuration file.");
+                    _log.WriteLog("failed to load configration file : " + ex.ToString());
             }
         }
     }

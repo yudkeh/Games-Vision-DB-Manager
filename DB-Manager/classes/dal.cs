@@ -8,9 +8,9 @@ using System.Windows.Forms;
 
 namespace DB_Manager.classes
 {
-    class dal
+    class Dal
     {
-
+        Logger _log = new Logger();
         private MySqlConnection connection;
         private string connectionString;
 
@@ -22,7 +22,7 @@ namespace DB_Manager.classes
 
         //constructors:
         //empty constructor
-        public dal()
+        public Dal()
         {
 
         }
@@ -39,7 +39,7 @@ namespace DB_Manager.classes
             try
             {
                 connection.Open();
-                MessageBox.Show("Connected to DB");
+                //MessageBox.Show("Connected to DB");
                 return true;
             }
             catch (MySqlException ex)
@@ -47,28 +47,35 @@ namespace DB_Manager.classes
                 switch (ex.Number)
                 {
                     case 1045:
-                        MessageBox.Show("Invalid username/password, please try again");
+                        MessageBox.Show("Invalid username/password, please try again.");
                         break;
                     default:
-                        MessageBox.Show("Cannot connect to server.\nContact administrator");
+                        MessageBox.Show("Cannot connect to server.\nContact administrator.");
                         break;
                 }
+                _log.WriteLog("failed to open connection to the DB : " + ex.ToString());
+                return false;
+            }
+            catch(Exception ex)
+            {
+                _log.WriteLog("failed to open connection to the DB : " + ex.ToString());
                 return false;
             }
         }
 
         public Boolean CloseConnection()
         {
+            Boolean status = true;
             try
             {
                 connection.Close();
-                return true;
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show(ex.Message);
-                return false;
+                _log.WriteLog("failed to close connection to the DB : " + ex.ToString());
+                status =false;
             }
+            return status;
         }
 
         public void SetConnectionString()
