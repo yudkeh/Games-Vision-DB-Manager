@@ -51,6 +51,7 @@
             this.btnUpload = new System.Windows.Forms.Button();
             this.pbUpload = new System.Windows.Forms.ProgressBar();
             this.lblPb = new System.Windows.Forms.Label();
+            this.backgroundWorker = new System.ComponentModel.BackgroundWorker();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -255,6 +256,10 @@
             this.lblPb.TabIndex = 18;
             this.lblPb.Text = "Uploading the data...";
             // 
+            // backgroundWorker
+            // 
+            this.backgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker_DoWork);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -315,6 +320,7 @@
         private System.Windows.Forms.Button btnUpload;
         private System.Windows.Forms.ProgressBar pbUpload;
         private System.Windows.Forms.Label lblPb;
+        private System.ComponentModel.BackgroundWorker backgroundWorker;
     }
 }
 

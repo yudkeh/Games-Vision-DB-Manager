@@ -20,14 +20,15 @@ namespace DB_Manager
         private String[] _file;
         private FileReader _fd;
         Logger _log = new Logger();
-        private Boolean runnig;
+        private Boolean _runnig;
+        private Boolean _uploadStatus;
 
         public Form1()
         {
             InitializeComponent();
             lblPb.Visible = false;
             pbUpload.Visible = false;
-            runnig = false;
+            _runnig = false;
         }
 
         private void Button1_Click(object sender, EventArgs e)
@@ -42,7 +43,7 @@ namespace DB_Manager
 
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!runnig)
+            if (!_runnig)
             {
                 Application.Exit();
             }
@@ -123,17 +124,21 @@ namespace DB_Manager
                 }
                 catch (IOException ex)
                 {
-                    Console.WriteLine(ex.ToString());  //For debugging use.
+                    _log.WriteLog("failed to select file : " + ex.ToString());
+                }
+                catch (Exception ex)
+                {
+                    _log.WriteLog("failed to select file : " + ex.ToString());
                 }
             }
-            Console.WriteLine(result);  //For debugging use.
         }
 
         private void BtnUpload_Click(object sender, EventArgs e)
         {
             _d = new Dal();
             pbUpload.Value = 0; //resetting the progres bar value
-            runnig = true;
+            _runnig = true;
+            _uploadStatus = false;
 
             //validating the form
             if (ValidateForm())
@@ -158,42 +163,56 @@ namespace DB_Manager
                         if (_fd.ReadData())
                         {
                             pbUpload.Value = 50;
-
-
                             lblPb.Text = "Uplaoding the data";
-                            pbUpload.Value = 100;
 
-                            lblPb.Text = "Data have been uploaded";
+                            backgroundWorker.RunWorkerAsync();
+
+                            if (_uploadStatus)
+                            {
+                                pbUpload.Value = 100;
+                                lblPb.Text = "Data have been uploaded";
+                            }
+                            else
+                            {
+                               //in case of failure, the error will be printed using the Dal variable
+                            }
+
                         }
                         else
                         {
-                            runnig = false;
+                            _runnig = false;
+                            lblPb.Visible = false;
+                            pbUpload.Visible = false;
                             MessageBox.Show("Cannot read the file.", "Error");
                         }
 
                     }
                     else
                     {
-                        runnig = false;
+                        _runnig = false;
                         lblPb.Visible = false;
                         pbUpload.Visible = false;
                         //MessageBox.Show("Could not conenct to the database.", "Error");
-                        //not priniting error since it can come from few reason, therefore the error will be printed in the Dal class.
+                        //not priniting error since it can come due to few reason, therefore the error will be printed in the Dal class.
                     }
 
                 }
                 else
                 {
-                    runnig = false;
+                    _runnig = false;
+                    lblPb.Visible = false;
+                    pbUpload.Visible = false;
                     MessageBox.Show("Please select file.", "Error");
                 }
             }
             else
             {
-                runnig = false;
+                _runnig = false;
+                lblPb.Visible = false;
+                pbUpload.Visible = false;
                 MessageBox.Show("Please make sure that the values have been inserted as need.", "Error");
             }
-            runnig = false;
+            _runnig = false;
         }
 
         //validating the form texts
@@ -223,11 +242,11 @@ namespace DB_Manager
         //inserting values from the form to the dal object and generating the connection string
         private void FillDal()
         {
-            _d.server = txtDbUrl.Text;
-            _d.port = txtPort.Text;
-            _d.password = txtDbPass.Text;
-            _d.uid = txtDbUser.Text;
-            _d.database = txtDbName.Text;
+            _d._server = txtDbUrl.Text;
+            _d._port = txtPort.Text;
+            _d._password = txtDbPass.Text;
+            _d._uid = txtDbUser.Text;
+            _d._database = txtDbName.Text;
             _d.SetConnectionString();
         }
 
@@ -260,6 +279,19 @@ namespace DB_Manager
                     //MessageBox.Show("Can't load configuration file.");
                     _log.WriteLog("failed to load configration file : " + ex.ToString());
             }
+        }
+
+        private void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            try
+            {
+                _uploadStatus = _d.PushData(_fd._teams, _fd._games, _fd._division);
+            }
+            catch (Exception ex)
+            {
+                _log.WriteLog("failure in the thread executer : " + ex.ToString());
+            }
+
         }
     }
 }

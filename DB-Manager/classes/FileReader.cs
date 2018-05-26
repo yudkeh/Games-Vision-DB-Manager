@@ -10,10 +10,9 @@ namespace DB_Manager.classes
     class FileReader
     {
         private string _filePath;
-        private List<Game> _games { get; set; }
-        private String _division { get; set; }
-        HashSet<string> _teams { get; set; }
-        public Boolean _finishTeams { get; set; }
+        public List<Game> _games { get; set; }
+        public String _division { get; set; }
+        public HashSet<string> _teams { get; set; }
         public Boolean _status;
         Logger _log = new Logger();
 
